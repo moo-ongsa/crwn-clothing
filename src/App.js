@@ -8,7 +8,8 @@ import SignInAndSignUpPage from './pages/sign-in-and-sign-up/sign-in-and-sign-up
 import Header from './components/header/header.component';
 
 import { auth, createUserProfileDocument } from "./firebase/firebase.utils";
-import { onSnapshot, doc, where, query, collection } from "firebase/firestore";
+import { onSnapshot } from "firebase/firestore";
+import { onAuthStateChanged } from "firebase/auth"
 
 function App() {
 
@@ -16,7 +17,7 @@ function App() {
 
 
   useEffect(() => {
-    const unsubscriptionFromAuth = auth.onAuthStateChanged(async userAuth => {
+    const unsubscriptionFromAuth = onAuthStateChanged(auth, async userAuth => {
       if (userAuth) {
         const userRef = await createUserProfileDocument(userAuth)
         onSnapshot(userRef, (snapshot) => {
@@ -25,9 +26,11 @@ function App() {
             ...snapshot.data()
           })
         });
+      } else {
+        setCurrentUser(null)
       }
     })
-    return unsubscriptionFromAuth()
+    return unsubscriptionFromAuth
   }, [])
 
   return (

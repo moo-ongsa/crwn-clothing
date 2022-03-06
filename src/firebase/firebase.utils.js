@@ -1,6 +1,6 @@
 import { initializeApp } from 'firebase/app';
-import { getFirestore, collection, doc, getDoc, setDoc, getDocs } from 'firebase/firestore';
-import { GoogleAuthProvider, getAuth, signInWithPopup, signOut, createUserWithEmailAndPassword } from "firebase/auth";
+import { getFirestore, doc, getDoc, setDoc } from 'firebase/firestore';
+import { GoogleAuthProvider, getAuth, signInWithPopup, signOut } from "firebase/auth";
 
 // Follow this pattern to import other Firebase services
 
