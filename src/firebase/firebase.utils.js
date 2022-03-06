@@ -1,6 +1,6 @@
 import { initializeApp } from 'firebase/app';
-import { getFirestore, collection, getDocs } from 'firebase/firestore/lite';
-import { GoogleAuthProvider, getAuth, signInWithPopup, signOut } from "firebase/auth";
+import { getFirestore, collection, doc, getDoc, setDoc, getDocs } from 'firebase/firestore';
+import { GoogleAuthProvider, getAuth, signInWithPopup, signOut, createUserWithEmailAndPassword } from "firebase/auth";
 
 // Follow this pattern to import other Firebase services
 
@@ -17,6 +17,33 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
+
+export const createUserProfileDocument = async (userAuth, additionalData) => {
+    if (!userAuth) return;
+    const userRef = doc(db, "users", userAuth.uid);
+    const docSnap = await getDoc(userRef);
+
+    if (!docSnap.exists()) {
+        const { displayName, email } = userAuth;
+        const createdAt = new Date();
+        try {
+            await setDoc(userRef, {
+                displayName,
+                email,
+                createdAt,
+                ...additionalData
+            })
+            console.log("created user", userAuth)
+        }
+        catch (error) {
+            console.log("error creating user ", error.message)
+        }
+    } else {
+        console.log("users", docSnap.data())
+    }
+
+    return userRef
+}
 
 export const auth = getAuth();
 auth.languageCode = 'it';
