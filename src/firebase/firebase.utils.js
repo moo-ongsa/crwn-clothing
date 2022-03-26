@@ -1,6 +1,6 @@
 import { initializeApp } from 'firebase/app';
 import { getFirestore, doc, getDoc, setDoc } from 'firebase/firestore';
-import { GoogleAuthProvider, getAuth, signInWithPopup, signOut } from "firebase/auth";
+import { GoogleAuthProvider, getAuth, signInWithPopup, signOut, onAuthStateChanged } from "firebase/auth";
 
 // Follow this pattern to import other Firebase services
 
@@ -57,3 +57,5 @@ provider.setCustomParameters({
 export const signInWithGoogle = () => signInWithPopup(auth, provider)
 
 export const signOutWithGoogle = () => signOut(auth)
+
+export const onAuthStateChangedListener = (callback) => onAuthStateChanged(auth, callback)

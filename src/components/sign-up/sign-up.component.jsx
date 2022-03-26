@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 import FormInput from "../form-input/form-input.component";
-import CustomButton from "../custom-button/custom-button.component";
+import Button from "../button/button.component";
 
 import { auth, createUserProfileDocument } from "../../firebase/firebase.utils";
 import { createUserWithEmailAndPassword } from "firebase/auth";
@@ -97,7 +97,7 @@ const SignUp = () => {
           label="Confirm Password"
           required
         />
-        <CustomButton type="submit">SIGN UP</CustomButton>
+        <Button type="submit">SIGN UP</Button>
       </form>
     </div>
   );
