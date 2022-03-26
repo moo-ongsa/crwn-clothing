@@ -1,5 +1,5 @@
 import { initializeApp } from 'firebase/app';
-import { getFirestore, doc, getDoc, setDoc } from 'firebase/firestore';
+import { getFirestore, doc, getDoc, setDoc, collection, writeBatch, query, getDocs } from 'firebase/firestore';
 import { GoogleAuthProvider, getAuth, signInWithPopup, signOut, onAuthStateChanged } from "firebase/auth";
 
 // Follow this pattern to import other Firebase services
@@ -17,6 +17,34 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
+
+export const addCollectionAndDocuments = async (collectionKey, objectsToAdd) => {
+
+    const collectionRef = collection(db, collectionKey);
+    const batch = writeBatch(db);
+
+    objectsToAdd.forEach((object) => {
+        const docRef = doc(collectionRef, object.title.toLowerCase())
+        batch.set(docRef, object)
+    })
+
+    await batch.commit()
+    console.log("batch.commit() done")
+}
+
+export const getCategoriesAndDocument = async () => {
+    const collectionRef = collection(db, 'categories');
+    const q = query(collectionRef)
+
+    const querySnapshot = await getDocs(q)
+    const categoryMap = querySnapshot.docs.reduce((acc, docSnapshot) => {
+        const { title, items } = docSnapshot.data()
+        acc[title.toLowerCase()] = items;
+        return acc
+    }, {})
+
+    return categoryMap
+}
 
 export const createUserProfileDocument = async (userAuth, additionalData) => {
     if (!userAuth) return;

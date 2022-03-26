@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 import FormInput from "../form-input/form-input.component";
-import Button from "../button/button.component";
+import Button, { BUTTON_TYPE_CLASSES } from "../button/button.component";
 
 import { auth, signInWithGoogle } from "../../firebase/firebase.utils";
 import { signInWithEmailAndPassword } from "firebase/auth";
@@ -51,7 +51,11 @@ const SignIn = () => {
         />
         <div className="buttons">
           <Button type="submit">Sign In</Button>
-          <Button type="button" onClick={signInWithGoogle} buttonType="google">
+          <Button
+            type="button"
+            onClick={signInWithGoogle}
+            buttonType={BUTTON_TYPE_CLASSES.google}
+          >
             Sign In With Google
           </Button>
         </div>
