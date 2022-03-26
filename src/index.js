@@ -9,8 +9,6 @@ import { UserProvider } from './contexts/user.context';
 import { ProductsProvider } from './contexts/shop.context';
 import { CartProvider } from './contexts/cart.context';
 
-import './index.css';
-
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
