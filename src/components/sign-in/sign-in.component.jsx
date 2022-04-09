@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import FormInput from "../form-input/form-input.component";
 import Button, { BUTTON_TYPE_CLASSES } from "../button/button.component";
 
-import { auth, signInWithGoogle } from "../../firebase/firebase.utils";
+import { auth, signInWithGoogle } from "../../utils/firebase/firebase.utils";
 import { signInWithEmailAndPassword } from "firebase/auth";
 
 import "./sign-in.style.scss";
