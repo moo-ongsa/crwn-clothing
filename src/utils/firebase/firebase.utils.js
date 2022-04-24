@@ -1,6 +1,6 @@
 import { initializeApp } from 'firebase/app';
 import { getFirestore, doc, getDoc, setDoc, collection, writeBatch, query, getDocs } from 'firebase/firestore';
-import { GoogleAuthProvider, getAuth, signInWithPopup, signOut, onAuthStateChanged } from "firebase/auth";
+import { GoogleAuthProvider, getAuth, signInWithPopup, signOut, onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword } from "firebase/auth";
 
 // Follow this pattern to import other Firebase services
 
@@ -65,8 +65,26 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
         console.log("users", docSnap.data())
     }
 
-    return userRef
+    return getDoc(userRef);
 }
+
+export const createAuthUserWithEmailAndPassword = async (email, password) => createUserWithEmailAndPassword(
+    auth,
+    email,
+    password
+)
+    .then((userCredential) => {
+        // Signed in
+        return userCredential;
+    })
+    .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.error(errorCode);
+        console.error(errorMessage);
+        alert(errorMessage);
+    });
+
 
 export const auth = getAuth();
 auth.languageCode = 'it';
@@ -77,8 +95,25 @@ provider.setCustomParameters({
     'propmt': 'select_account'
 });
 
-export const signInWithGoogle = () => signInWithPopup(auth, provider)
+export const signInAuthUserWithEmailAndPassword = (email, password) => signInWithEmailAndPassword(auth, email, password)
+
+export const signInWithGooglePopup = () => signInWithPopup(auth, provider)
+
+export const signOutUser = () => auth.signOut()
 
 export const signOutWithGoogle = () => signOut(auth)
 
 export const onAuthStateChangedListener = (callback) => onAuthStateChanged(auth, callback)
+
+export const getCurrentUser = () => {
+    return new Promise((resolve, reject) => {
+        const unsubscribe = onAuthStateChanged(
+            auth,
+            (userAuth) => {
+                unsubscribe()
+                resolve(userAuth)
+            },
+            reject
+        )
+    })
+}

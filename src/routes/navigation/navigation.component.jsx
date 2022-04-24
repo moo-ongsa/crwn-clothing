@@ -1,10 +1,9 @@
 import React from "react";
 import { Link, Outlet } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { selectCurrentUser } from "../../store/user/user.selector";
 import { selectIsCartOpen } from "../../store/cart/cart.selector";
-
-import { auth } from "../../utils/firebase/firebase.utils";
+import { signOutStart } from "../../store/user/user.action";
 
 import { ReactComponent as Logo } from "../../assets/crown.svg";
 
@@ -16,6 +15,7 @@ import "./navigation.styles.scss";
 const Navigation = () => {
   const currentUser = useSelector(selectCurrentUser);
   const isCartOpen = useSelector(selectIsCartOpen);
+  const dispatch = useDispatch();
 
   return (
     <>
@@ -34,7 +34,7 @@ const Navigation = () => {
             <div
               className="option"
               onClick={() => {
-                auth.signOut();
+                dispatch(signOutStart());
               }}
             >
               {currentUser.displayName}

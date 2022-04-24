@@ -1,17 +1,15 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 
 import FormInput from "../form-input/form-input.component";
 import Button from "../button/button.component";
 
-import {
-  auth,
-  createUserProfileDocument,
-} from "../../utils/firebase/firebase.utils";
-import { createUserWithEmailAndPassword } from "firebase/auth";
-
 import "./sign-up.styles.scss";
+import { signUpStart } from "../../store/user/user.action";
 
 const SignUp = () => {
+  const dispatch = useDispatch();
+
   const [formData, setFormData] = useState({
     displayName: "",
     email: "",
@@ -33,24 +31,7 @@ const SignUp = () => {
     }
 
     try {
-      const { user } = await createUserWithEmailAndPassword(
-        auth,
-        email,
-        password
-      )
-        .then((userCredential) => {
-          // Signed in
-          return userCredential;
-        })
-        .catch((error) => {
-          const errorCode = error.code;
-          const errorMessage = error.message;
-          console.error(errorCode);
-          console.error(errorMessage);
-          alert(errorMessage);
-        });
-
-      createUserProfileDocument(user, { displayName });
+      dispatch(signUpStart(email, password, displayName));
 
       setFormData({
         displayName: "",
