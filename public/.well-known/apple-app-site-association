@@ -4,8 +4,8 @@
         "details": [
             {
                 "appID": "S23LDM237X.org.reactjs.native.example.wisibleMobile",
-                "paths": [ "/", "/oauth/google"]
-            },
+                "paths": [ "*"]
+            }
         ]
     }
 }
