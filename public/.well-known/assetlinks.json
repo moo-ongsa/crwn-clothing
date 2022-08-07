@@ -1,9 +1,7 @@
 [{
   "relation": ["delegate_permission/common.handle_all_urls"],
-  "target": {
-    "namespace": "android_app",
+  "target" : { 
+    "namespace": "android_app", 
     "package_name": "com.wisiblemobile",
-    "sha256_cert_fingerprints":
-    ["DA:B7:B8:CB:39:42:0E:D0:A0:C6:68:42:69:DD:5D:3E:19:FD:FE:8F:8C:BD:11:EB:6A:C8:EF:E2:BD:9F:7B:C8"]
-  }
+    "sha256_cert_fingerprints": ["19:B7:9D:C5:81:A2:F1:BA:CA:3B:2E:6D:8B:F8:1B:23:43:52:46:05:CE:E5:B1:D2:09:7D:0A:23:AE:B1:FF:DD"] }
 }]
