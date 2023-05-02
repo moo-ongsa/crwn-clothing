@@ -1,3 +1,4 @@
+import { tracker } from "../../analytics";
 import { createAction } from "../../utils/reducer/reducer.utils";
 import { CART_ACTION_TPYES } from "./cart.types";
 
@@ -5,6 +6,11 @@ const addCartItem = (cartItems, productToAdd) => {
     const existingCartItem = cartItems.find(
         (cartItem) => cartItem.id === productToAdd.id
     );
+
+    tracker.track('add_item_to_cart', {
+        category: 'App Activity',
+        ...productToAdd,
+    })
 
     if (existingCartItem) {
         return cartItems.map((cartItem) =>

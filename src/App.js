@@ -9,6 +9,7 @@ import Home from './routes/home/hompage.component';
 import SignInAndSignUp from './routes/sign-in-and-sign-up/sign-in-and-sign-up.components';
 import Checkout from './routes/checkout/checkout.component';
 import { checkUserSession } from './store/user/user.action'
+import { tracker } from './analytics';
 
 function App() {
   const dispatch = useDispatch()
@@ -16,6 +17,8 @@ function App() {
   useEffect(() => {
     dispatch(checkUserSession())
   });
+  
+  tracker.page()
 
   return (
     <div className="App">
